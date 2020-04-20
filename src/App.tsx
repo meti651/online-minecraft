@@ -8,12 +8,14 @@ import Game from "./components/Game/Game";
 
 function App() {
   return (
+      <div className="main-container">
         <Router>
-          <Route path="/" component={Home} />
+          <Route exact path="/" component={Home} />
           <Route path="/registration" component={Registration} />
           <Route path="/login" component={Login} />
-          <Route path="/game" component={Game} />
+          <Route path="/game/{:type}" component={Game} />
         </Router>
+      </div>
   );
 }
 
