@@ -1,0 +1,82 @@
+.auth-container {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../../public/images/dirt-background.jpg");
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    min-height: 400px;
+    min-width: 400px;
+    max-height: 600px;
+    max-width: 600px;
+    height: 80%;
+    width: 60%;
+    margin: auto;
+    top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    box-shadow: 4px 5px rgba(0, 0, 0, 0.4);
+}
+
+.auth-title {
+    font-family: fantasy;
+    font-size: 400%;
+    text-shadow: 0 5px rgba(0, 0, 0, 0.7);
+    color: rgb(170, 170, 170);
+}
+
+.auth-form {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.auth-form div, button {
+    height: 15%;
+}
+
+.auth-form div input{
+    height: 80%;
+    width: 50%;
+    box-shadow: 3px 4px rgba(0, 0, 0, 0.4);
+    border: none;
+    color: #522e24;
+    background-color: rgba(150, 150, 150, 1);
+    text-align: center;
+    font-size: large;
+    font-weight: normal;
+    transition: 0.2s;
+}
+
+.auth-form div input::placeholder{
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.auth-form div input:focus {
+    width: 55%;
+    height: 85%;
+    outline: none;
+    background-color: #75beda;
+    font-weight: bold;
+    box-shadow: 6px 8px rgba(0, 0, 0, 0.4);
+}
+
+.auth-submit {
+    width: 30%;
+    margin: 0 auto;
+    border: none;
+    box-shadow: 3px 5px rgba(0, 0, 0, 0.4);
+    background-color: rgba(125, 125, 125, 1);
+    font-size: 150%;
+    font-family: fantasy;
+    color: #ebedc8;
+}
+
+.auth-submit:hover {
+    cursor: pointer;
+    background-color: #75beda;
+    width: 35%;
+    color: #522e24;
+    box-shadow: 6px 10px rgba(0, 0, 0, 0.4);
+
+}
