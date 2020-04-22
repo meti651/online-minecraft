@@ -1,0 +1,10 @@
+.back-arrow {
+    position: fixed;
+    top:1%;
+    left:1%;
+}
+
+.back-image {
+    height: 70px;
+    width: 70px;
+}
