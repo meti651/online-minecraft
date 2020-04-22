@@ -3,6 +3,7 @@ import axios from 'axios';
 import {endpoints} from "./AuthenticationPaths";
 import {useHistory} from 'react-router-dom';
 import "./Authentication.css";
+import BackStepper from "../BackStepper";
 
 interface Props {
     username? : any,
@@ -59,6 +60,7 @@ const Registration: React.FC<Props> = () => {
 
 
     return <div className="auth-container">
+            <BackStepper/>
             <div className="auth-title">
                 <div className="title">Registration</div>
             </div>

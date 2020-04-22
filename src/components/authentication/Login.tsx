@@ -4,6 +4,7 @@ import axios from "axios";
 import {endpoints} from "./AuthenticationPaths";
 
 import "./Authentication.css";
+import BackStepper from "../BackStepper";
 
 interface Props {
 
@@ -38,6 +39,7 @@ const Login: React.FC<Props> = () => {
     };
 
     return <div className="auth-container">
+        <BackStepper/>
         <div className="auth-title"><div className="title">Login</div></div>
         <div className="auth-form">
             <div className="auth-username">
