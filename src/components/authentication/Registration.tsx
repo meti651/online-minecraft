@@ -24,9 +24,15 @@ const Registration: React.FC<Props> = () => {
 
 
     useEffect(() => {
+        setStatusList([]);
         if(stateUsername !== "" && statePassword !== "" && stateEmail !== "" && confirmPassword === statePassword) {
+            if(confirmPassword)
             setIsDisabled(false);
         }else{
+            setStatusList(["All input must be filled"]);
+            if(confirmPassword !== statePassword) {
+                setStatusList([statusList[0], "Password and confirmation don't match"]);
+            }
             setIsDisabled(true);
         }
     }, [stateUsername, statePassword, stateEmail, confirmPassword]);
@@ -79,7 +85,7 @@ const Registration: React.FC<Props> = () => {
                 </div>
                 <button onClick={submitHandler} className="auth-submit btn-submit" type="submit" disabled={isDisabled}>Submit</button>
             </div>
-            <div className="auth-status">{statusList}</div>
+        {statusList.length > 0 ? <div className="auth-status">{statusList.map(status => <div>{status}</div>)}</div> : null}
     </div>
 };
 
