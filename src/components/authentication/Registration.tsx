@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
-import {endpoints} from "./AuthenticationPaths";
+import {endpoints} from "../ApiEndpoints";
 import {useHistory} from 'react-router-dom';
 import "./Authentication.css";
 import BackStepper from "../BackStepper";
