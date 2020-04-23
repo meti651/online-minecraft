@@ -18,7 +18,8 @@ const Login: React.FC<Props> = () => {
     const history = useHistory();
 
     useEffect(() => {
-        if(username === "" && password === "") {
+        setStatusList([]);
+        if(username === "" || password === "") {
             setStatusList(["Username and password must be filled"]);
             setIsDisabled(true);
         }
@@ -50,7 +51,7 @@ const Login: React.FC<Props> = () => {
             </div>
             <button type="submit" onClick={submitHandler} className="auth-submit" disabled={isDisabled}>Submit</button>
         </div>
-        <div className="auth-status">{statusList}</div>
+        {statusList.length > 0 ?<div className="auth-status">{statusList}</div> : <div/>}
     </div>
 };
 
