@@ -2,8 +2,11 @@
     height: 100%;
     width: 100%;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
     background-position: center;
     background-size: cover;
     z-index: 100;
+    position: absolute;
+    top:0;
+    left:0;
 }
