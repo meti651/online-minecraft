@@ -9,17 +9,17 @@ import BackGround from "./components/backGround/BackGround.js";
 
 function App() {
   return (
+      <React.Fragment>
+      <BackGround/>
       <div className="main-container">
-        <Router>
-          {/* HomePage*/}
-          {/*<Route exact path="/" component={Home} />*/}
-          {/* TestPage*/}
-          <Route exact path="/" component={BackGround} />
-          <Route path="/registration" component={Registration} />
-          <Route path="/login" component={Login} />
-          <Route path="/game/{:type}" component={Game} />
+          <Router>
+            <Route exact path="/" component={Home} />
+            <Route path="/registration" component={Registration} />
+            <Route path="/login" component={Login} />
+            <Route path="/game/{:type}" component={Game} />
         </Router>
       </div>
+      </React.Fragment>
   );
 }
 
