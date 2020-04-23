@@ -78,3 +78,19 @@
     width: 35%;
     color: #522e24;
 }
+
+.auth-submit:disabled{
+    color: rgba(235, 237, 200, 0.5);
+    background-color: rgba(125, 125, 125, 0.7);
+    width: 30%;
+    cursor: default;
+}
+
+.auth-status {
+    background-color: rgba(125, 125, 125, 1);
+    width: 60%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 1% 0;
+    color: #9a0000;
+}
