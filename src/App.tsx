@@ -12,14 +12,14 @@ function App() {
   return (
       <React.Fragment>
           {/*<BackGround/>*/}
-          {/*<div className="main-container">*/}
+          <div className="main-container">
               <Router>
                   <Route exact path="/" component={() => <Home setPlaying={setIsPlaying}/>} />
                   <Route path="/registration" component={Registration} />
                   <Route path="/login" component={Login} />
                   <Route path="/game/:type" component={Game}/>
               </Router>
-          {/*</div>*/}
+          </div>
       </React.Fragment>
   );
 }
