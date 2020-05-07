@@ -11,7 +11,7 @@ function App() {
     const [isPlaying, setIsPlaying] = useState(false);
   return (
       <React.Fragment>
-          {/*<BackGround/>*/}
+          {/*<BackGround isPlaying={isPlaying}/>*/}
           <div className="main-container">
               <Router>
                   <Route exact path="/" component={() => <Home setPlaying={setIsPlaying}/>} />
