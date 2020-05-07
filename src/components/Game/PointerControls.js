@@ -8,6 +8,9 @@ const PointerLockControl = Props => {
     //const {gl, camera, invalidate} = useThree();
     const {gl, camera} = useThree();
     const controls = useRef();
+    const move = useRef({moveForward: 0, moveRight: 0});
+    const keys = useRef({w: false, s:false, a:false, d:false});
+    const velocity = useRef({y: 0});
 
     useEffect(() => {
         const control = controls.current;
@@ -17,18 +20,41 @@ const PointerLockControl = Props => {
     }, []);
 
     useEffect(() => {
-        const control = controls.current;
-        window.addEventListener('keydown', () => control.moveForward(1));
-        return(() => window.removeEventListener('keydown', () => control.moveForward(1)));
+        window.addEventListener('keydown', keyPressHandler);
+        return(() => window.removeEventListener('keydown', keyPressHandler));
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener('keyup', keyUpHandler);
+        return(() => window.removeEventListener('keyup', keyUpHandler));
     }, []);
 
     useFrame(() => {
-        //invalidate();
-
+        if(keys.current.w) move.current.moveForward = 0.3;
+        if(keys.current.s) move.current.moveForward = - 0.3;
+        if(keys.current.a) move.current.moveRight = - 0.3;
+        if(keys.current.d) move.current.moveRight = + 0.3;
+        controls.current.moveForward(move.current.moveForward);
+        controls.current.moveRight(move.current.moveRight);
+        controls.current.getObject().position.y += velocity.current.y;
     });
 
     const keyPressHandler = (event) => {
-        console.log(event.key);
+        if(event.key === "w") keys.current.w = true;
+        else if(event.key === "s") keys.current.s = true;
+        else if(event.key === "a") keys.current.a = true;
+        else if(event.key === "d") keys.current.d = true;
+        // else if(event.key === " ") velocity.current.y = 0.1;
+    };
+
+    const keyUpHandler = (event) => {
+        if(event.key === "w") keys.current.w = false;
+        else if(event.key === "s") keys.current.s = false;
+        else if(event.key === "a") keys.current.a = false;
+        else if(event.key === "d") keys.current.d = false;
+        move.current.moveRight = 0;
+        move.current.moveForward = 0;
+
     };
 
     return <pointerLockControls ref={controls} args={[camera, gl.domElement]} {...Props}/>
