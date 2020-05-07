@@ -1,50 +1,88 @@
 import React, {useEffect, useRef, useState} from "react";
-import axios from "axios";
-import {endpoints} from "../ApiEndpoints";
-import DirtBlock from "../Game/blocks/DirtBlock";
 import {gameTextures} from "../Constants";
-import {TextureLoader} from "three";
-import {useThree} from "react-three-fiber";
+import {Object3D, TextureLoader} from "three";
+import {useFrame, useLoader, useThree} from "react-three-fiber";
+import * as signalR from "@aspnet/signalr";
+import {HubConnection} from "@aspnet/signalr";
 
 const defaultCells = () => {
-    const constans = 20;
+    const constans = 350;
     const offSet = constans/2;
     let blocks = [];
+    // for(let y = 0; y < constans; y++)
     for(let x = 0; x < constans; x++){
+        let row = [];
         for(let z = 0; z < constans; z++){
-            blocks.push({
-                position: [x-offSet, 0, z-offSet]
+            row.push({
+                XPOS: x - offSet, YPOS: 0, ZPOS:z - offSet
             })
         }
+        blocks.push(row);
     }
     return blocks;
 };
 
 
-const Plane = () => {
-    const {invalidate} = useThree();
-    const [cells, setCells] = useState([]);
-    const [textures] = useState(() => [gameTextures.dirtSide, gameTextures.dirtSide, gameTextures.dirtTop, gameTextures.dirtBottom,  gameTextures.dirtSide, gameTextures.dirtSide].map(texture => {
-        return new TextureLoader().load(texture, invalidate);
-    }));
+const _object = new Object3D();
 
+const Plane = () => {
+    const { camera } = useThree();
+    const [side, top, bottom] = useLoader(TextureLoader, [gameTextures.dirtSide, gameTextures.dirtTop, gameTextures.dirtBottom]);
+    const textures = [side, side, top, bottom, side, side];
+    const materials = textures.map((texture, i) => <meshLambertMaterial key={texture.uuid + i} attachArray="material" color='white' map={texture}/>);
+    const [gameState, setGameState] = useState([]);
+    const connection = useRef(HubConnection);
 
     useEffect(() => {
-        console.log("Sending block request...");
-        axios.get(endpoints.blocks)
-            .then(response => {
-                if(response.status === 200) setCells(response.data);
-            }).catch(_ => {
-                const defBlocks = defaultCells();
-                setCells(defBlocks);
-        })
+        connection.current = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/game").build();
+        // if(connection.current.state === 0) {
+        //     console.log("Connection is disabled with the server. Default plane reading...");
+        //     setGameState(defaultCells);
+        //     return;
+        // }
+        connection.current.on("ReceiveGameState", update);
+        connection.current.start();
     }, []);
 
+    const update = (state) => {
+        console.log("Getting data...");
+        setGameState(gameState => {
+            const cells = JSON.parse(state);
+            camera.position.x = cells[0][0].XPOS;
+            camera.position.y = cells[0][0].YPOS + 1;
+            camera.position.z = cells[0][0].ZPOS;
+            return cells;
+        });
 
-    return (<group>
-        {cells.length > 0 ? cells.map(block => {return <DirtBlock key={`${block.position[0]}${block.position[2]}`} position={block.position} textures={textures}/>;}) : null}
-        </group>
-    );
+    };
+
+
+    const ref = useRef();
+    const attrib = useRef();
+
+    useFrame(state => {
+        let i = 0;
+        gameState.forEach(cells => {
+            cells.forEach(cell => {
+                const x = cell.XPOS;
+                const y = cell.YPOS;
+                const z = cell.ZPOS;
+                const id = i++;
+                _object.position.set(x, y, z);
+                _object.updateMatrix();
+                ref.current.setMatrixAt(id, _object.matrix)
+            });
+            ref.current.instanceMatrix.needsUpdate = true;
+        })
+    });
+    return (
+        <instancedMesh ref={ref} args={[null, null, 125000]}>
+            <boxBufferGeometry attach="geometry" args={[1, 1, 1]}>
+                <instancedBufferAttribute ref={attrib} attachObject={['attributes']} args={[0]} />
+            </boxBufferGeometry>
+            {materials}
+        </instancedMesh>
+    )
 };
 
 export default Plane;

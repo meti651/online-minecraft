@@ -6,11 +6,12 @@ extend({OrbitControls});
 
 
 const Controls = Props => {
-    const {gl, camera, invalidate} = useThree();
+    //const {gl, camera, invalidate} = useThree();
+    const {gl, camera} = useThree();
     const controls = useRef();
 
     useFrame(() => {
-        invalidate();
+        //invalidate();
         controls.current.update();
     });
 
