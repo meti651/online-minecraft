@@ -48,9 +48,9 @@ const Plane = () => {
         console.log("Getting data...");
         setGameState(gameState => {
             const cells = JSON.parse(state);
-            camera.position.x = cells[0][0].XPOS;
-            camera.position.y = cells[0][0].YPOS + 1;
-            camera.position.z = cells[0][0].ZPOS;
+            // camera.position.x = cells[10][10].XPOS;
+            // camera.position.y = cells[10][10].YPOS + 1;
+            // camera.position.z = cells[10][10].ZPOS;
             return cells;
         });
 

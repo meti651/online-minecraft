@@ -6,7 +6,7 @@ import Plane from "./Plane";
 
 
 const BackGround = (isPlaying) => {
-    let content = (<Canvas camera={{position: [5, 5, 5], far: 100}} gl={{antialias: false, alpha: false}}>
+    let content = (<Canvas camera={{position: [5, 5, 20], far: 100}} gl={{antialias: false, alpha: false}}>
             <Controls autoRotate />
             <ambientLight intensity={0.9}/>
             <pointLight castShadow position={[0, 10, 0]} intensity={0.5}/>
@@ -15,9 +15,6 @@ const BackGround = (isPlaying) => {
             </Suspense>
         </Canvas>
     );
-    console.log(isPlaying);
-    if(isPlaying) content = <></>;
-    console.log(content);
     return content;
 };
 
