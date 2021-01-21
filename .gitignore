@@ -119,3 +119,6 @@ fabric.properties
 .idea/
 
 debug.log
+
+package-lock.json
+yarn.lock
